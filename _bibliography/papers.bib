@@ -1,15 +1,28 @@
 ---
 ---
 
-@article{dutta2017abcpy,
+@article{pacchiardi2020score,
   abbr={arXiv},
-  title={ABCpy: A High-Performance Computing Perspective to Approximate Bayesian Computation},
-  author={Dutta, Ritabrata and Schoengens, Marcel and Pacchiardi, Lorenzo and Ummadisingu, Avinash and Widmer, Nicole and Onnela, Jukka-Pekka and Mira, Antonietta},
-  journal={arXiv preprint arXiv:1711.04694},
-  html={https://arxiv.org/abs/1711.04694},
-  abstract={ABCpy is a highly modular scientific library for Approximate Bayesian Computation (ABC) written in Python. The main contribution of this paper is to document a software engineering effort that enables domain scientists to easily apply ABC to their research without being ABC experts; using ABCpy they can easily run large parallel simulations without much knowledge about parallelization. Further, ABCpy enables ABC experts to easily develop new inference schemes and evaluate them in a standardized environment and to extend the library with new algorithms. These benefits come mainly from the modularity of ABCpy. We give an overview of the design of ABCpy and provide a performance evaluation concentrating on parallelization. This points us towards the inherent imbalance in some of the ABC algorithms. We develop a dynamic scheduling MPI implementation to mitigate this issue and evaluate the various ABC algorithms according to their adaptability towards high-performance computing. },
-  year={2017},
-  code={https://github.com/eth-cscs/abcpy}
+  title={Score Matched Conditional Exponential Families for Likelihood-Free Inference},
+  author={Pacchiardi, Lorenzo and Dutta, Ritabrata},
+  journal={arXiv preprint arXiv:2012.10903},
+  year={2020},
+  html={https://arxiv.org/abs/2012.10903},
+  abstract={To perform Bayesian inference for stochastic simulator models for which the likelihood is not accessible, Likelihood-Free Inference (LFI) relies on simulations from the model. Standard LFI methods can be split according to how these simulations are used: to build an explicit Surrogate Likelihood, or to accept/reject parameter values according to a measure of distance from the observations (Approximate Bayesian Computation (ABC)). In both cases, simulations are adaptively tailored to the value of the observation. Here, we generate parameter-simulation pairs from the model independently on the observation, and use them to learn a conditional exponential family likelihood approximation; to parametrize it, we use Neural Networks whose weights are tuned with Score Matching. With our likelihood approximation, we can employ MCMC for doubly intractable distributions to draw samples from the posterior for any number of observations without additional model simulations, with performance competitive to comparable approaches. Further, the sufficient statistics of the exponential family can be used as summaries in ABC, outperforming the state-of-the-art method in five different models with known likelihood. Finally, we apply our method to a challenging model from meteorology.},
+  code={http://github.com/LoryPack/SM-ExpFam-LFI},
+  selected={true}
+}
+
+
+@article{dutta2020using,
+  abbr={arXiv},
+  title={Using Mobility data in the design of optimal lockdown strategies for the COVID-19 pandemic in England},
+  author={Dutta, Ritabrata and Gomes, Susana and Kalise, Dante and Pacchiardi, Lorenzo},
+  journal={arXiv preprint arXiv:2006.16059},
+  year={2020},
+  html={https://arxiv.org/abs/2006.16059},
+  abstract={A mathematical model for the COVID-19 pandemic spread, which integrates age-structured Susceptible-Exposed-Infected-Recovered-Deceased dynamics with real mobile phone data accounting for the population mobility, is presented. The dynamical model adjustment is performed via Approximate Bayesian Computation. Optimal lockdown and exit strategies are determined based on nonlinear model predictive control, constrained to public-health and socio-economic factors. Through an extensive computational validation of the methodology, it is shown that it is possible to compute robust exit strategies with realistic reduced mobility values to inform public policy making, and we exemplify the applicability of the methodology using datasets from England and France.},
+  code={https://github.com/OptimalLockdown}
 }
 
 @article{pacchiardi2020distance,
@@ -25,16 +38,19 @@
   code={https://github.com/eth-cscs/abcpy-models/tree/master/GeologicalScience/VolcanicEruption}  
 }
 
-@article{dutta2020using,
+
+@article{dutta2017abcpy,
   abbr={arXiv},
-  title={Using Mobility data in the design of optimal lockdown strategies for the COVID-19 pandemic in England},
-  author={Dutta, Ritabrata and Gomes, Susana and Kalise, Dante and Pacchiardi, Lorenzo},
-  journal={arXiv preprint arXiv:2006.16059},
-  year={2020},
-  html={https://arxiv.org/abs/2006.16059},
-  abstract={A mathematical model for the COVID-19 pandemic spread, which integrates age-structured Susceptible-Exposed-Infected-Recovered-Deceased dynamics with real mobile phone data accounting for the population mobility, is presented. The dynamical model adjustment is performed via Approximate Bayesian Computation. Optimal lockdown and exit strategies are determined based on nonlinear model predictive control, constrained to public-health and socio-economic factors. Through an extensive computational validation of the methodology, it is shown that it is possible to compute robust exit strategies with realistic reduced mobility values to inform public policy making, and we exemplify the applicability of the methodology using datasets from England and France.},
-  code={https://github.com/OptimalLockdown}
+  title={ABCpy: A High-Performance Computing Perspective to Approximate Bayesian Computation},
+  author={Dutta, Ritabrata and Schoengens, Marcel and Pacchiardi, Lorenzo and Ummadisingu, Avinash and Widmer, Nicole and Onnela, Jukka-Pekka and Mira, Antonietta},
+  journal={arXiv preprint arXiv:1711.04694},
+  html={https://arxiv.org/abs/1711.04694},
+  abstract={ABCpy is a highly modular scientific library for Approximate Bayesian Computation (ABC) written in Python. The main contribution of this paper is to document a software engineering effort that enables domain scientists to easily apply ABC to their research without being ABC experts; using ABCpy they can easily run large parallel simulations without much knowledge about parallelization. Further, ABCpy enables ABC experts to easily develop new inference schemes and evaluate them in a standardized environment and to extend the library with new algorithms. These benefits come mainly from the modularity of ABCpy. We give an overview of the design of ABCpy and provide a performance evaluation concentrating on parallelization. This points us towards the inherent imbalance in some of the ABC algorithms. We develop a dynamic scheduling MPI implementation to mitigate this issue and evaluate the various ABC algorithms according to their adaptability towards high-performance computing. },
+  year={2017},
+  code={https://github.com/eth-cscs/abcpy},
+  selected={true}
 }
+
 
 ---
 ---
@@ -77,7 +93,7 @@
   url={http://link.aps.org/doi/10.1103/PhysRev.47.777},
   html={https://journals.aps.org/pr/abstract/10.1103/PhysRev.47.777},
   pdf={example_pdf.pdf},
-  selected={true}
+  selected={false}
 }
 
 @article{einstein1905molekularkinetischen,
