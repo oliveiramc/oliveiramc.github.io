@@ -3,6 +3,6 @@ _site
 .jekyll-metadata
 .DS_store
 .ruby-version
-Gemfile.lock
 .tweet-cache/
 .idea
+Gemfile.lock
