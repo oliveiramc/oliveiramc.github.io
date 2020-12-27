@@ -124,6 +124,7 @@ plugins:
 scholar:
 
   last_name: Pacchiardi
+  first_name: [Lorenzo, L.]
 
   style: apa
   locale: en
