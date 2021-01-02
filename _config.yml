@@ -59,13 +59,13 @@ google_analytics: UA-XXXXXXXXX # out your google-analytics code
 # Blog
 # -----------------------------------------------------------------------------
 
-blog_name: Lorenzo   # your blog must have a name for it to show up in the nav bar
-blog_description: PhD student in Statistics at the University of Oxford
+blog_name: blog   # your blog must have a name for it to show up in the nav bar
+blog_description: Some topics in Statistics and further
 permalink: /blog/:year/:title/
 
 # Pagination
 pagination:
-  enabled: false
+  enabled: true
 
 # Comments
 disqus_shortname: al-folio # put your disqus shortname
