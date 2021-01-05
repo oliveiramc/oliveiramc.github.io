@@ -1,5 +1,5 @@
 ---
-layout: distill_no_author_1
+layout: distill
 output:
   distill::distill_article:
     toc: true
