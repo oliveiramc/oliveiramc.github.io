@@ -1,4 +1,5 @@
 _site
+.bundle
 .sass-cache
 .jekyll-metadata
 .DS_store
@@ -6,3 +7,4 @@ _site
 .tweet-cache/
 .idea
 Gemfile.lock
+vendor
