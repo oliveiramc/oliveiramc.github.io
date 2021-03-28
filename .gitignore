@@ -5,7 +5,11 @@ _site
 .jekyll-metadata
 .DS_store
 .ruby-version
+<<<<<<< 37012c8257aeb68b383fae9f969ee656eeb35f23
 .idea
 .tweet-cache/
+=======
+.tweet-cache
+>>>>>>> Update Gemfile (#230)
 Gemfile.lock
 vendor
