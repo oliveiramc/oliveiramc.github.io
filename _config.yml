@@ -13,6 +13,7 @@ footer_text: >
   Powered by <a href="http://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
   Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
 
+icon: 🔥 # the emoji used as the favicon
 url:  # the base hostname & protocol for your site
 baseurl: # the subpath of your site, e.g. /blog/
 last_updated: true # set to true if you want to display last updated in the footer
@@ -41,6 +42,7 @@ og_image: # The site-wide (default for all links) Open Graph preview image
 # -----------------------------------------------------------------------------
 
 github_username: LoryPack # your GitHub user name
+gitlab_username: # your GitLab user name
 twitter_username: # your Twitter handle
 linkedin_username: lorenzo-pacchiardi # your LinkedIn user name
 scholar_userid: 9EAb0uEAAAAJ # your Google Scholar ID
@@ -109,7 +111,15 @@ kramdown:
 
 # Includes & excludes
 include: ['_pages']
-exclude: [vendor]
+exclude:
+  - bin
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+keep_files:
+  - CNAME
+  - .nojekyll
+  - .git
 
 # Plug-ins
 plugins:
@@ -119,8 +129,9 @@ plugins:
   - jekyll/scholar
   - jekyll-twitter-plugin
   - jemoji
-  # - bootstrap
-  # - material-sass
+
+# Extras
+github: [metadata]
 
 # -----------------------------------------------------------------------------
 # Jekyll Scholar
