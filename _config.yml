@@ -61,6 +61,7 @@ blogger_url: # your blogger URL
 work_url: # work page URL
 keybase_username: # your keybase user name
 wikidata_id: # your wikidata id
+dblp_url: # your DBLP profile url
 
 contact_note:
 google_analytics: UA-194441087-1 # out your google-analytics code
