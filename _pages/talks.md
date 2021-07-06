@@ -8,7 +8,7 @@ nav: true
 ---
 
 <h2 class="year">{{2021}}</h2>
-- 2021/06/28: Contributed talk on my [arXiv preprint](https://arxiv.org/abs/2104.03889) on Generalized Bayesian Likelihood-Free Inference Using Scoring Rules Estimators @ the (online) **2021 ISBA World Meeting seminar**. 
+- 2021/06/28: Contributed talk on my [arXiv preprint](https://arxiv.org/abs/2104.03889) on Generalized Bayesian Likelihood-Free Inference Using Scoring Rules Estimators @ the (online) **2021 ISBA World Meeting seminar** [pre-recorded video [here](https://www.youtube.com/watch?v=mqlbVzTxgaQ)]. 
 
 - 2021/06/03: (Online) seminar on my [arXiv preprint](https://arxiv.org/abs/2104.03889) on Generalized Bayesian Likelihood-Free Inference Using Scoring Rules Estimators @ Warwick Machine Learning Reading Group, **University of Warwick**, Coventry.
 
