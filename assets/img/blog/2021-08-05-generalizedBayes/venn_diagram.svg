@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="183.66551mm"
+   height="57.076126mm"
+   viewBox="0 0 183.66551 57.076126"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1 (1:1.1+202105261517+ce6663b3b7)"
+   sodipodi:docname="venn_diagram.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.55"
+     inkscape:cx="330"
+     inkscape:cy="139.67742"
+     inkscape:window-width="1920"
+     inkscape:window-height="1016"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Livello 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(43.568195,-61.440339)">
+    <ellipse
+       style="opacity:0.997;fill:none;stroke:#800000;stroke-width:0.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path31"
+       cx="77.506271"
+       cy="97.910439"
+       rx="45.415092"
+       ry="14.525809" />
+    <ellipse
+       style="opacity:0.997;fill:none;stroke:#0000ff;stroke-width:0.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path974"
+       cx="87.160606"
+       cy="100.58988"
+       rx="30.753548"
+       ry="9.5826674" />
+    <ellipse
+       style="opacity:0.997;fill:none;stroke:#008000;stroke-width:0.508673;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path976"
+       cx="59.234306"
+       cy="95.439415"
+       rx="70.047264"
+       ry="20.113419" />
+    <ellipse
+       style="opacity:0.997;fill:none;stroke:#800080;stroke-width:0.5;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path978"
+       cx="48.264561"
+       cy="92.130386"
+       rx="91.582756"
+       ry="26.136078" />
+    <circle
+       style="opacity:0.997;fill:#000002;fill-opacity:1;stroke:none;stroke-width:0.447561;stroke-linejoin:round;stroke-opacity:1"
+       id="path1048"
+       cx="100.61845"
+       cy="103.24292"
+       r="1.165588" />
+    <text
+       xml:space="preserve"
+       style="font-size:4.23333px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;stroke-width:0.264583"
+       x="62.755432"
+       y="100.31867"
+       id="text3671"><tspan
+         sodipodi:role="line"
+         id="tspan3669"
+         style="stroke-width:0.264583"
+         x="62.755432"
+         y="100.31867">Original Bayes' theorem</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:4.23333px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#0000ff;stroke-width:0.264583"
+       x="53.922512"
+       y="89.748573"
+       id="text4829"><tspan
+         sodipodi:role="line"
+         id="tspan4827"
+         style="fill:#0000ff;stroke-width:0.264583"
+         x="53.922512"
+         y="89.748573">Power likelihood</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:4.23333px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#800000;stroke-width:0.264583"
+       x="29.327719"
+       y="82.265427"
+       id="text11983"><tspan
+         sodipodi:role="line"
+         id="tspan11981"
+         style="fill:#800000;stroke-width:0.264583"
+         x="29.327719"
+         y="82.265427">Scoring rules-based</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:4.23333px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#008000;stroke-width:0.264583"
+       x="14.362769"
+       y="74.352348"
+       id="text12515"><tspan
+         sodipodi:role="line"
+         id="tspan12513"
+         style="fill:#008000;stroke-width:0.264583"
+         x="14.362769"
+         y="74.352348">Loss-based</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:4.23333px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#800080;stroke-width:0.264583"
+       x="-15.767545"
+       y="64.656677"
+       id="text15405"><tspan
+         sodipodi:role="line"
+         id="tspan15403"
+         style="fill:#800080;stroke-width:0.264583"
+         x="-15.767545"
+         y="64.656677">Generalized Variational Inference</tspan></text>
+  </g>
+</svg>
