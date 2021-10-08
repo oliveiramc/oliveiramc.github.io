@@ -9,6 +9,9 @@ nav: true
 
 <h2 class="year">{{2021}}</h2>
 
+- 2021/10/08: Seminar on my [arXiv preprint](https://arxiv.org/abs/2012.10903) on Score matched conditional exponential families
+for Likelihood-Free Inference @ [ACIIS seminar series](https://warwick.ac.uk/fac/sci/statistics/news/algorithms-seminars/), **University of Warwick**, Coventry.
+
 - 2021/07/13: (Online) Seminar on the [ABCpy package](https://github.com/eth-cscs/abcpy) for Likelihood Free Inference @ Oxford Research Software Engineering (RSE) group, **University of Oxford**.
   
 - 2021/06/28: Contributed talk on my [arXiv preprint](https://arxiv.org/abs/2104.03889) on Generalized Bayesian Likelihood-Free Inference Using Scoring Rules Estimators @ **2021 ISBA World Meeting seminar** (online) [pre-recorded video [here](https://www.youtube.com/watch?v=mqlbVzTxgaQ)]. 
