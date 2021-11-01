@@ -65,7 +65,11 @@ wikidata_id: # your wikidata id
 dblp_url: # your DBLP profile url
 stackoverflow_id: #your stackoverflow id
 
-contact_note:
+rss_icon: false
+
+contact_note: >
+  You can even add a little note about which of these is the best way to reach you.
+
 google_analytics: UA-194441087-1 # out your google-analytics code
 panelbear_analytics: XXXXXXXXX # panelbear analytics site ID
 
