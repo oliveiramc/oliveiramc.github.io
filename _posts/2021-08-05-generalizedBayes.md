@@ -17,6 +17,21 @@ authors:
 
 bibliography: 2021-08-05-generalizedBayes.bib
 
+
+toc:
+  - name: The original Bayes theorem
+    # if a section has subsections, you can add them as follows:
+    subsections:
+      - name: Properties of Bayes posterior
+      - name: So what is wrong?
+  - name: Generalizations of Bayes posterior
+    subsections:
+      - name: Power likelihood
+      - name: Loss-based Bayesian inference
+      - name: Generalized Variational Inference
+      - name: Recap
+  - name: Conclusion
+
 ---
 
 If you are reading this, you probably know what Bayes' theorem is. Here, we are concerned with the use of Bayes' theorem to perform inference for parameters of a statistical model (a.k.a. **Bayesian inference**). 
@@ -27,7 +42,7 @@ Hopefully, I'll be able to put some order in this rapidly expanding literature a
 
 **TL; DR:** Extensions of Bayesian inference work better in some cases which are not contemplated by using the original Bayes' theorem (primarily, model misspecification), and provide more justification.
 
-# The original Bayes' theorem
+# The original Bayes theorem
 
 <div style="text-align:center;font-size:15px;">
 <div class="l-body">
@@ -69,7 +84,7 @@ $$
 \pi(\theta\vert \mathbf x) = \frac{\pi(\theta) \prod_{i=1}^n p(x_i\vert \theta)}{p(\mathbf x)} \propto \pi(\theta) \prod_{i=1}^n p(x_i\vert \theta).
 $$
 
-## Properties of Bayes' posterior
+## Properties of Bayes posterior
 
 The posterior obtained from Bayes' theorem satisfies some nice properties; first, there are properties that are intrinsic to Bayes' update rule:
 
@@ -84,7 +99,7 @@ If you further assumes that the observations $$ \mathbf x$$ are generated from $
 - An analogue to the Central Limit Theorem in frequentist statistics applies to Bayes' posterior, called __Bernstein-von Mises theorem__. It goes like this: as the number of observations $$n$$ goes to infinity, the posterior converges to a normal distribution which is centered in $$\theta_0$$ (and whose variance decreases as $$1/n$$ and is asymptotically equivalent to the sampling variance of the maximum likelihood estimator of $$\theta$$)<d-footnote>The theorem of course holds under some regularity conditions, such as $\pi(\theta_0)>0$; click <a href="https://encyclopediaofmath.org/wiki/Bernstein-von_Mises_theorem#References" target="_blank" > here </a> for an introduction and some further references. </d-footnote>. That means that Bayesian inference is, asymptotically, equivalent to maximum likelihood estimation, as it recovers the exact parameter value $$\theta_0$$. 
 
 
-## So what's wrong?
+## So what is wrong?
 
 To recap what we said above, the main motivation behind Bayes' theorem is that, if the model $$p(x\vert \theta)$$ is well specified, the posterior distribution is a coherent way to learn about the true parameter value (to which it converges in the limit of infinite data); additionally, that is the best possible way to process information even with a finite amount of observations (by Zellner's argument). 
 
@@ -116,7 +131,7 @@ Finally, Bayesian inference implicitly assumes that the prior is a good represen
 Some of the generalized Bayesian approaches <d-cite key="knoblauch2019generalized"></d-cite> explicitly include the fact that these assumptions may be broken in the definition of the inference strategy, as we will see below.
 
 
-# Generalizations of Bayes' posterior
+# Generalizations of Bayes posterior
 
 In the following, I review extensions to Bayes theorem which are more justified and may have better performances in a misspecified setting (or can even be used without a probabilistic model); some will also tackle directly the issues regarding prior and computational power.
 

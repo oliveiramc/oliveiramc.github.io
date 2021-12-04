@@ -17,6 +17,23 @@ authors:
 
 bibliography: 2020-12-30-exchangeMCMC.bib
 
+# Optionally, you can add a table of contents to your post.
+# NOTES:
+#   - make sure that TOC names match the actual section names
+#     for hyperlinks within the post to work correctly.
+#   - we may want to automate TOC generation in the future using
+#     jekyll-toc plugin (https://github.com/toshimaru/jekyll-toc).
+toc:
+  - name: Motivation
+  - name: Metropolis-Hastings algorithm
+  - name: The ExchangeMCMC algorithm
+  - name: Some extensions
+    # if a section has subsections, you can add them as follows:
+    subsections:
+      - name: Bridging
+      - name: ExchangeMCMC without perfect simulations
+  - name: Related algorithms
+
 ---
 
 
@@ -107,7 +124,7 @@ Note that $$ K=0 $$ recovers the original ExchangeMCMC. This procedure, usually 
 
 
 
-## ExchangeMCMC without perfect simulations.
+## ExchangeMCMC without perfect simulations
 
 If it is not possible to sample from $$ p(\cdot\vert \theta') $$ as it is required in the ExchangeMCMC algorithm, Murray et al., 2012, suggested to run $$ T_{in} $$ steps of an MCMC chain on $$ x $$ targeting $$ p(\cdot\vert \theta') $$ at each step of ExchangeMCMC; if $$ T_{in} $$ is large enough, the last sample can be considered as (approximately) drawn from $$ p(\cdot\vert \theta') $$ itself and used in place of the unavailable perfect simulation.
 
@@ -125,7 +142,7 @@ Some theoretical guarantees (albeit under strongs conditions), are given in Appe
 
 
 
-# Related algorithms.
+# Related algorithms
 ExchangeMCMC algorithm is very popular due to its ease of use. However, it is certainly not the only algorithm to sample from doubly intractable distribution (see the nice review given in Park and Haran, 2018 <d-cite key="park2018bayesian"></d-cite>); some are listed next: 
 
 <ul>
