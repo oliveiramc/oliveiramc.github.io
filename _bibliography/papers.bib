@@ -1,7 +1,6 @@
 ---
 ---
 
-@article{Calheiros_2021,	doi = {10.1007/s10278-021-00453-2},	url = {https://doi.org/10.1007%2Fs10278-021-00453-2},	year = 2021,	month = {mar},	publisher = {Springer Science and Business Media {LLC}},	volume = {34},	number = {4},	pages = {798--810},	author = {Jos{\'{e}} Lucas Leite Calheiros and Lucas Benevides Viana de Amorim and Lucas Lins de Lima and Ailton Felix de Lima Filho and Jos{\'{e}} Raniery Ferreira J{\'{u}}nior and Marcelo Costa de Oliveira},	title = {The Effects of Perinodular Features on Solid Lung Nodule Classification},	journal = {Journal of Digital Imaging}},
 @article{Marcelo_Oliveira_76310140,
 title={Toward classifying small lung nodules with hyperparameter optimization of convolutional neural networks},
 journal={Computational Intelligence},
@@ -9,86 +8,7 @@ author={Marcelo Oliveira},
 doi={10.1111/coin.12350},
 url={http://doi.org/10.1111/coin.12350},
 issn={0824-7935},
-year={2020}
-}
-
-@article{pacchiardi2021generalized,
-      abbr={arXiv},
-      bibtex_show={true},
-      title={Generalized Bayesian Likelihood-Free Inference Using Scoring Rules Estimators},
-      author={Lorenzo Pacchiardi and Ritabrata Dutta},
-      journal={arXiv preprint arXiv:2104.03889},
-      year={2021},
-      eprint={2104.03889},
-      archivePrefix={arXiv},
-      html={https://arxiv.org/abs/2104.03889},
-      primaryClass={stat.ME},
-      abstract={We propose a framework for Bayesian Likelihood-Free Inference (LFI) based on Generalized Bayesian Inference using scoring rules (SR). SR are used to evaluate probabilistic models given an observation; a proper SR is minimised in expectation when the model corresponds to the true data generating process for the observation. Using a strictly proper SR, for which the above minimum is unique, ensures posterior consistency of our method. As the likelihood function is intractable for LFI, we employ consistent estimators of SR using model simulations in a pseudo-marginal MCMC; we show the target of such chain converges to the exact SR posterior with increasing number of simulations. Furthermore, we note popular LFI techniques like Bayesian Synthetic Likelihood (BSL) and semiparametric BSL can be seen as special cases of our framework using only proper (but not strictly so) SR. We provide empirical results validating our consistency result and show how related approaches do not enjoy this property. Practically, we use the Energy and Kernel Scores, but our general framework sets the stage for extensions with other scoring rules. },
-      code={https://github.com/LoryPack/GenBayes_LikelihoodFree_ScoringRules},
-      selected={true}
-}
-
-@article{pacchiardi2020score,
-  abbr={arXiv},
-  bibtex_show={true},
-  title={Score Matched Conditional Exponential Families for Likelihood-Free Inference},
-  author={Pacchiardi, Lorenzo and Dutta, Ritabrata},
-  journal={arXiv preprint arXiv:2012.10903},
-  year={2020},
-  html={https://arxiv.org/abs/2012.10903},
-  abstract={To perform Bayesian inference for stochastic simulator models for which the likelihood is not accessible, Likelihood-Free Inference (LFI) relies on simulations from the model. Standard LFI methods can be split according to how these simulations are used: to build an explicit Surrogate Likelihood, or to accept/reject parameter values according to a measure of distance from the observations (Approximate Bayesian Computation (ABC)). In both cases, simulations are adaptively tailored to the value of the observation. Here, we generate parameter-simulation pairs from the model independently on the observation, and use them to learn a conditional exponential family likelihood approximation; to parametrize it, we use Neural Networks whose weights are tuned with Score Matching. With our likelihood approximation, we can employ MCMC for doubly intractable distributions to draw samples from the posterior for any number of observations without additional model simulations, with performance competitive to comparable approaches. Further, the sufficient statistics of the exponential family can be used as summaries in ABC, outperforming the state-of-the-art method in five different models with known likelihood. Finally, we apply our method to a challenging model from meteorology.},
-  code={http://github.com/LoryPack/SM-ExpFam-LFI},
-  selected={true}
-}
-
-
-@article{dutta2021using,
-  abbr={PLOS Comp. Biol.},
-  bibtex_show={true},
-  title={Using Mobility Data in the Design of Optimal Lockdown Strategies for the COVID-19 Pandemic},
-  author={Dutta, Ritabrata and Gomes, Susana and Kalise, Dante and Pacchiardi, Lorenzo},
-  journal={PLOS Computational Biology},
-  volume={17},
-  number={8},
-  pages={e1009236},
-  year={2021},
-  publisher={Public Library of Science San Francisco, CA USA},
-  html={https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1009236},
-  abstract={A mathematical model for the COVID-19 pandemic spread, which integrates age-structured Susceptible-Exposed-Infected-Recovered-Deceased dynamics with real mobile phone data accounting for the population mobility, is presented. The dynamical model adjustment is performed via Approximate Bayesian Computation. Optimal lockdown and exit strategies are determined based on nonlinear model predictive control, constrained to public-health and socio-economic factors. Through an extensive computational validation of the methodology, it is shown that it is possible to compute robust exit strategies with realistic reduced mobility values to inform public policy making, and we exemplify the applicability of the methodology using datasets from England and France.},
-  code={https://github.com/OptimalLockdown}
-}
-
-
-@article{pacchiardi2020distance,
-  abbr={Sankhya B},
-  bibtex_show={true},
-  title={Distance-Learning for Approximate Bayesian Computation to Model a Volcanic Eruption},
-  author={Pacchiardi, Lorenzo and K{\"u}nzli, Pierre and Schoengens, Marcel and Chopard, Bastien and Dutta, Ritabrata},
-  journal={Sankhya B},
-  pages={1--30},
-  year={2020},
-  publisher={Springer},
-  abstract={Approximate Bayesian computation (ABC) provides us with a way to infer parameters of models, for which the likelihood function is not available, from an observation. Using ABC, which depends on many simulations from the considered model, we develop an inferential framework to learn parameters of a stochastic numerical simulator of volcanic eruption. Moreover, the model itself is parallelized using Message Passing Interface (MPI). Thus, we develop a nested-parallelized MPI communicator to handle the expensive numerical model with ABC algorithms. ABC usually relies on summary statistics of the data in order to measure the discrepancy model output and observation. However, informative summary statistics cannot be found for the considered model. We therefore develop a technique to learn a distance between model outputs based on deep metric-learning. We use this framework to learn the plume characteristics (eg. initial plume velocity) of the volcanic eruption from the tephra deposits collected by field-work associated with the 2450 BP Pululagua (Ecuador) volcanic eruption.},
-  html={https://link.springer.com/article/10.1007/s13571-019-00208-8},
-  code={https://github.com/eth-cscs/abcpy-models/tree/master/GeologicalScience/VolcanicEruption}  
-}
-
-
-
-@article{JSSABCpy,
- abbr={JSS},
- title={ABCpy: A High-Performance Computing Perspective to Approximate Bayesian Computation},
- author={Dutta, Ritabrata and Schoengens, Marcel and Pacchiardi, Lorenzo and Ummadisingu, Avinash and Widmer, Nicole and K{\"u}nzli, Pierre and Onnela, Jukka-Pekka and Mira, Antonietta},
- volume={100},
- html={https://www.jstatsoft.org/index.php/jss/article/view/v100i07},
- doi={10.18637/jss.v100.i07},
- abstract={ABCpy is a highly modular scientific library for approximate Bayesian computation (ABC) written in Python. The main contribution of this paper is to document a software engineering effort that enables domain scientists to easily apply ABC to their research without being ABC experts; using ABCpy they can easily run large parallel simulations without much knowledge about parallelization. Further, ABCpy enables ABC experts to easily develop new inference schemes and evaluate them in a standardized environment and to extend the library with new algorithms. These benefits come mainly from the modularity of ABCpy. We give an overview of the design of ABCpy and provide a performance evaluation concentrating on parallelization. This points us towards the inherent imbalance in some of the ABC algorithms. We develop a dynamic scheduling MPI implementation to mitigate this issue and evaluate the various ABC algorithms according to their adaptability towards high-performance computing.},
- number={7},
- journal={Journal of Statistical Software},
- year={2021},
- pages={1--38},
- code={https://github.com/eth-cscs/abcpy},
- selected={true}
+year={2021}
 }
 
 
