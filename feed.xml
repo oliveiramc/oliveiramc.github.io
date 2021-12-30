@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="http://oliveiramc.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="http://oliveiramc.github.io/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-12-30T19:43:47+00:00</updated><id>http://oliveiramc.github.io/feed.xml</id><title type="html">blank</title><subtitle>Lorenzo Pacchiardi, PhD student in Statistics at Oxford.
+</subtitle><entry><title type="html">Generalizing Bayesian Inference</title><link href="http://oliveiramc.github.io/blog/2021/generalizedBayes/" rel="alternate" type="text/html" title="Generalizing Bayesian Inference" /><published>2021-08-05T00:00:00+00:00</published><updated>2021-08-05T00:00:00+00:00</updated><id>http://oliveiramc.github.io/blog/2021/generalizedBayes</id><content type="html" xml:base="http://oliveiramc.github.io/blog/2021/generalizedBayes/">&lt;p&gt;If you are reading this, you probably know what Bayes’ theorem is. Here, we are concerned with the use of Bayes’ theorem to perform inference for parameters of a statistical model (a.k.a. &lt;strong&gt;Bayesian inference&lt;/strong&gt;).&lt;/p&gt;
+
+&lt;p&gt;Recently, several generalizations of Bayesian inference have been proposed. The aim of this post is to survey some of these generalizations and 
+overview the pros and cons of each with respect to using the original Bayes theorem. 
+Hopefully, I’ll be able to put some order in this rapidly expanding literature and provide some intuition on why we need to move beyond the original Bayes theorem.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;TL; DR:&lt;/strong&gt; Extensions of Bayesian inference work better in some cases which are not contemplated by using the original Bayes’ theorem (primarily, model misspecification), and provide more justification.&lt;/p&gt;
+
+&lt;h1 id=&quot;the-original-bayes-theorem&quot;&gt;The original Bayes theorem&lt;/h1&gt;
+
+&lt;div style=&quot;text-align:center;font-size:15px;&quot;&gt;
+&lt;div class=&quot;l-body&quot;&gt;
+    &lt;img class=&quot;img-fluid&quot; src=&quot;https://upload.wikimedia.org/wikipedia/commons/d/d4/Thomas_Bayes.gif&quot; /&gt;
+&lt;/div&gt;
+&lt;i&gt;
+A portrait of Thomas Bayes (maybe). 
+Source: &lt;a href=&quot;https://commons.wikimedia.org/wiki/File:Thomas_Bayes.gif&quot;&gt;Unknown author&lt;/a&gt;, Public domain, via Wikimedia Commons.&lt;/i&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;
+Let’s first have a look at Bayes’ original theorem &lt;d-footnote&gt;This is actually the form that was given to it by Laplace; click &lt;a href=&quot;https://www.lesswrong.com/posts/RTt59BtFLqQbsSiqd/a-history-of-bayes-theorem&quot; target=&quot;_blank&quot;&gt; here &lt;/a&gt; for a nice history of the theorem. &lt;/d-footnote&gt;:&lt;/p&gt;
+
+\[\pi(\theta\vert x) = \frac{\pi(\theta) p(x\vert \theta)}{p(x)}, \qquad p(x) = \int \pi(\theta) p(x\vert \theta) d\theta.\]
+
+&lt;p&gt;Here, I am using \(\theta\) to denote a &lt;em&gt;parameter&lt;/em&gt; on which we want to perform inference, while \(x\) is the &lt;em&gt;data&lt;/em&gt; that we observe.&lt;/p&gt;
+
+&lt;p&gt;As the standard textbook description of Bayesian inference says, Bayes’ theorem provides a &lt;em&gt;posterior belief&lt;/em&gt; \(\pi(\theta\vert x)\), by updating the &lt;em&gt;prior belief&lt;/em&gt; \(\pi(\theta)\) with the information on \(\theta\) carried by \(x\). Crucially, all information on \(\theta\) contained in \(x\) is represented by the &lt;em&gt;likelihood&lt;/em&gt; \(p(x\vert \theta)\), such likelihood being the probabilistic model from which &lt;strong&gt;we believe&lt;/strong&gt; \(x\) was generated. This is the gist of Bayesian inference.&lt;/p&gt;
+
+&lt;p&gt;Actually, the denominator in the definition of the posterior is independent on \(\theta\). Exploiting this fact, it is common to write:&lt;/p&gt;
+
+\[\pi(\theta\vert x) \propto \pi(\theta) p(x\vert \theta),\]
+
+&lt;p&gt;where the proportional sign refers to both sides of the equation being considered as function of \(\theta\)&lt;d-footnote&gt;When some posterior expectations need to be computed, the function on the right-hand side needs to be normalized (ie divided by the normalizing constant $p(x)$). However, computing the normalizing constant is not needed when sampling from the posterior with MCMC methods, for instance.&lt;/d-footnote&gt;.&lt;/p&gt;
+
+&lt;p&gt;Additionally, Bayes’ theorem is very modular, allowing to sequentially incorporate new information into our belief: say that we previously had data \(x_1\), from which we obtained \(\pi(\theta\vert x_1)\). If we now get an independent observation \(x_2\), we can apply Bayes’ theorem again by using \(\pi(\theta\vert x_1)\) as a prior and get:&lt;/p&gt;
+
+\[\pi(\theta\vert x_1, x_2) \propto  \pi(\theta\vert x_1) p(x_2\vert \theta).\]
+
+&lt;p&gt;So, if we get \(n\) independent observations, say \(\mathbf {x} = (x_1, x_2, \ldots, x_n)\), the posterior belief is:&lt;/p&gt;
+
+\[\pi(\theta\vert \mathbf x) = \frac{\pi(\theta) \prod_{i=1}^n p(x_i\vert \theta)}{p(\mathbf x)} \propto \pi(\theta) \prod_{i=1}^n p(x_i\vert \theta).\]
+
+&lt;h2 id=&quot;properties-of-bayes-posterior&quot;&gt;Properties of Bayes posterior&lt;/h2&gt;
+
+&lt;p&gt;The posterior obtained from Bayes’ theorem satisfies some nice properties; first, there are properties that are intrinsic to Bayes’ update rule:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;coherence:&lt;/strong&gt; in whatever order you process the observations \(x_i\), you end up with the same posterior belief&lt;d-footnote&gt;This property may be given different names in other works, as for instance &lt;i&gt;Bayesian additivity&lt;/i&gt;.&lt;/d-footnote&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Likelihood principle:&lt;/strong&gt; As the observations \(\mathbf x\) only appear through the likelihood in the definition of the posterior, Bayes’ theorem satisfies the likelihood principle, which says that (from &lt;a href=&quot;https://en.wikipedia.org/wiki/Likelihood_principle&quot;&gt;Wikipedia&lt;/a&gt;):
+    &lt;blockquote&gt;
+      &lt;p&gt;given a statistical model, all the evidence in a sample relevant to model parameters is contained in the likelihood function.&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;If you further assumes that the observations \(\mathbf x\) are generated from \(p(\cdot\vert\theta_0)\) for some parameter value \(\theta_0\) (i.e., the model is &lt;em&gt;well specified&lt;/em&gt;), Bayes’ posterior satisfies some additional properties:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;according to information theory arguments in Zellner &lt;d-cite key=&quot;zellner1988optimal&quot;&gt;&lt;/d-cite&gt;, Bayes theorem is the &lt;strong&gt;optimal way to process information&lt;/strong&gt;, in the sense that its use does not discard any information present in the data about the parameters.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;An analogue to the Central Limit Theorem in frequentist statistics applies to Bayes’ posterior, called &lt;strong&gt;Bernstein-von Mises theorem&lt;/strong&gt;. It goes like this: as the number of observations \(n\) goes to infinity, the posterior converges to a normal distribution which is centered in \(\theta_0\) (and whose variance decreases as \(1/n\) and is asymptotically equivalent to the sampling variance of the maximum likelihood estimator of \(\theta\))&lt;d-footnote&gt;The theorem of course holds under some regularity conditions, such as $\pi(\theta_0)&amp;gt;0$; click &lt;a href=&quot;https://encyclopediaofmath.org/wiki/Bernstein-von_Mises_theorem#References&quot; target=&quot;_blank&quot;&gt; here &lt;/a&gt; for an introduction and some further references. &lt;/d-footnote&gt;. That means that Bayesian inference is, asymptotically, equivalent to maximum likelihood estimation, as it recovers the exact parameter value \(\theta_0\).&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;so-what-is-wrong&quot;&gt;So what is wrong?&lt;/h2&gt;
+
+&lt;p&gt;To recap what we said above, the main motivation behind Bayes’ theorem is that, if the model \(p(x\vert \theta)\) is well specified, the posterior distribution is a coherent way to learn about the true parameter value (to which it converges in the limit of infinite data); additionally, that is the best possible way to process information even with a finite amount of observations (by Zellner’s argument).&lt;/p&gt;
+
+&lt;p&gt;However, these arguments vacillate when the model is not an accurate representation of the distribution \(g(\cdot)\) from which observations were generated (or data-generating process, DGP). By this, we mean that there do not exist any parameter value such that \(p(\cdot\vert\theta)=g(\cdot)\). If that is the case, two things happen:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Zellner’s argument simply does not hold anymore &lt;d-cite key=&quot;holmes2017assigning&quot;&gt;&lt;/d-cite&gt;.&lt;/li&gt;
+  &lt;li&gt;A Bernstein von-Mises result still holds, but now the asymptotic normal distribution will be centered in the parameter value
+\(\theta^\star = \arg \min_{\theta} D_{\text{KL}}(g(\cdot)\vert \vert p(\cdot|\theta)),\)
+where \(D_{\text{KL}}\) is the Kullback-Leibler (KL) divergence&lt;d-footnote&gt; Notice that $\theta^\star$ is also the parameter value to which the frequentist maximum likelihood estimate converges&lt;/d-footnote&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;More in general, we need to ask what is the aim of Bayesian inference in such a &lt;strong&gt;misspecified&lt;/strong&gt; setting. In fact, with Bayesian inference we do not learn about the &lt;em&gt;true&lt;/em&gt; parameter value anymore, as such thing does not exist. Rather, the standard Bayes’ posterior learns about the parameter value such that the misspecified model is as close as possible to the DGP in the specific sense of the KL divergence.&lt;/p&gt;
+
+&lt;p&gt;That may still be what you want to do in some cases, but I argue below that using the KL divergence may behave poorly in some misspecified cases; instead, some generalized Bayesian inference allow the user to choose the way in which you approximate the DGP with the probabilistic model (for instance replacing the KL with other divergences &lt;d-cite key=&quot;pacchiardi2021generalized&quot;&gt;&lt;/d-cite&gt;&lt;d-cite key=&quot;jewson2018principles&quot;&gt;&lt;/d-cite&gt;). Others instead completely dispose of a probabilistic model.&lt;/p&gt;
+
+&lt;h3 id=&quot;issues-with-the-kl-divergence&quot;&gt;Issues with the KL divergence&lt;/h3&gt;
+
+&lt;p&gt;Learning \(\theta^\star\) according to the KL divergence may not behave well when the model is misspecified; for instance, consider the following DGP:&lt;/p&gt;
+
+\[g(x) = 0.1\ h(x) + 0.9\ p(x|\theta_0);\]
+
+&lt;p&gt;this means that 90% of observations are generated from the model for a given parameter value \(\theta_0\), while the other 10% are generated from the distribution \(h\). If \(h\) has heavier tails than \(p\), \(\theta^\star\) can be far away from \(\theta_0\), as the KL divergence gives large importance to the tail behavior of the distributions&lt;d-cite key=&quot;jewson2018principles&quot;&gt;&lt;/d-cite&gt;. With a finite amount of samples, that translates into saying that Bayes’ posterior is highly sensitive to outliers in the data.&lt;/p&gt;
+
+&lt;p&gt;With more general misspecifications, things may go wrong in different ways.&lt;/p&gt;
+
+&lt;h3 id=&quot;prior-and-computational-limits&quot;&gt;Prior and computational limits&lt;/h3&gt;
+
+&lt;p&gt;Finally, Bayesian inference implicitly assumes that the prior is a good representation of previous knowledge, and that enough computational power is available to sample from the posterior (which, in some cases, it is very expensive to do) &lt;d-cite key=&quot;knoblauch2019generalized&quot;&gt;&lt;/d-cite&gt;.&lt;/p&gt;
+
+&lt;p&gt;Some of the generalized Bayesian approaches &lt;d-cite key=&quot;knoblauch2019generalized&quot;&gt;&lt;/d-cite&gt; explicitly include the fact that these assumptions may be broken in the definition of the inference strategy, as we will see below.&lt;/p&gt;
+
+&lt;h1 id=&quot;generalizations-of-bayes-posterior&quot;&gt;Generalizations of Bayes posterior&lt;/h1&gt;
+
+&lt;p&gt;In the following, I review extensions to Bayes theorem which are more justified and may have better performances in a misspecified setting (or can even be used without a probabilistic model); some will also tackle directly the issues regarding prior and computational power.&lt;/p&gt;
+
+&lt;p&gt;Across these works, a recurrent underlying question is: what is the actual aim of inference when we cannot specify the model correctly?&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Disclaimer&lt;/strong&gt;: this overview is non-exhaustive and strongly biased due to papers I’ve read and my personal research activity.&lt;/p&gt;
+
+&lt;h2 id=&quot;power-likelihood&quot;&gt;Power likelihood&lt;/h2&gt;
+
+&lt;p&gt;A first idea to tackle (mild) model misspecification is to reduce the importance of the likelihood term in the definition of Bayes’ posterior. This can be done by raising the likelihood function to a power \(\alpha \in [0,1]\), where \(\alpha=1\) recovers Bayes’ posterior and \(\alpha=0\) corresponds to sticking to the prior. The resulting posterior is therefore:&lt;/p&gt;
+
+\[\pi_\alpha(\theta\vert x) \propto \pi(\theta) p(x\vert \theta)^\alpha,\]
+
+&lt;p&gt;This idea has been discussed in detail in&lt;d-cite key=&quot;holmes2017assigning&quot;&gt;&lt;/d-cite&gt; (and previous papers referred there). The authors of &lt;d-cite key=&quot;holmes2017assigning&quot;&gt;&lt;/d-cite&gt; also propose a way to automatically tune \(\alpha\); this way works by matching the expected information gain in two experiments, one involving the exact data-generating process and the other one involving instead the best model approximation. This strategy recovers \(\alpha=1\) in the well specified case, and sets \(\alpha&amp;lt;1\) otherwise. Other methods for tuning \(\alpha\) are reviewed in &lt;d-cite key=&quot;wu2020comparison&quot;&gt;&lt;/d-cite&gt;.&lt;/p&gt;
+
+&lt;p&gt;With respect to standard Bayes’ posterior, this strategy does not change the parameter value on which learning is performed, but it only changes the speed of learning (ie the rate of concentration of the posterior distribution with an increasing number of observations). Also, it still satisfies the likelihood principle and coherence.&lt;/p&gt;
+
+&lt;h2 id=&quot;loss-based-bayesian-inference&quot;&gt;Loss-based Bayesian inference&lt;/h2&gt;
+
+&lt;p&gt;A larger leap is taken in &lt;d-cite key=&quot;bissiri2016general&quot;&gt;&lt;/d-cite&gt;. There, the authors replace the likelihood term with the exponential of a loss function:&lt;/p&gt;
+
+&lt;p&gt;\begin{equation}\label{Eq:bissiri}
+\pi_{\ell,w}(\theta\vert x) \propto \pi(\theta) \exp{ - w \cdot \ell (\theta,x)},
+\end{equation}&lt;/p&gt;
+
+&lt;p&gt;where \(w\) is a weight which balances the influence of the loss and prior term. With this update, as argued in &lt;d-cite key=&quot;bissiri2016general&quot;&gt;&lt;/d-cite&gt;, you learn about the parameter value minimizing the expected loss:&lt;/p&gt;
+
+\[\int \ell (\theta,x) g(x) dx,\]
+
+&lt;p&gt;where \(g\) is the data-generating process.&lt;/p&gt;
+
+&lt;p&gt;In &lt;d-cite key=&quot;bissiri2016general&quot;&gt;&lt;/d-cite&gt;, they show how the update rule above (Eq. \eqref{Eq:bissiri}) can be derived axiomatically from the task of learning about the parameter value minimizing the expected loss, by assuming the observed data to be independent from the prior and inference to be &lt;strong&gt;coherent&lt;/strong&gt; in the sense defined above (ie invariant to the order in which the observations were obtained).&lt;/p&gt;
+
+&lt;p&gt;An advantage to this approach is that you do not need to specify a probabilistic model (ie likelihood) here; inference can be performed on “parameter” values that are solely defined through the loss function.&lt;/p&gt;
+
+&lt;p&gt;Of course, the power likelihood posterior is obtained as a special case by setting \(\ell(\theta, x) = - \log p(x\vert \theta)\), and \(w=\alpha\); further setting \(w=1\) gives back the original posterior.&lt;/p&gt;
+
+&lt;p&gt;However, with a generic loss, setting the value of \(w\) is an arbitrary choice. The larger \(w\), the faster the concentration of the posterior with the increase of the number of observations. In &lt;d-cite key=&quot;bissiri2016general&quot;&gt;&lt;/d-cite&gt;, some heuristic techniques to tune \(w\) are discussed; in general, however, the choice of \(w\) is a subjective choice of the user, which may be driven by practical and computational reasons as well.&lt;/p&gt;
+
+&lt;p&gt;Finally, notice that a Bernstein-von Mises result still hold for this more general posterior (of course under some regularity conditions). Some very general and applicable formulations are given in &lt;d-cite key=&quot;miller2019asymptotic&quot;&gt;&lt;/d-cite&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;scoring-rules-based-bayesian-inference&quot;&gt;Scoring rules-based Bayesian inference&lt;/h3&gt;
+
+&lt;p&gt;So, the loss-based approach in Eq. \eqref{Eq:bissiri} works without a probabilistic model. But what if you have a misspecified model which you believe carries some meaning about the process you are studying?&lt;/p&gt;
+
+&lt;p&gt;As mentioned above, using the original Bayes’ posterior may not be a wise choice. In order to perform inference in a sounded way, an idea is to use the loss-based approach and express the loss \(\ell\) as a function of the probabilistic model:&lt;/p&gt;
+
+\[\ell(\theta, x) = S(p(\cdot|\theta), x),\]
+
+&lt;p&gt;where \(S\) is a function of a probability distribution and an observation, which is usually called &lt;em&gt;scoring rule&lt;/em&gt; in the literature&lt;d-cite key=&quot;gneiting2007strictly&quot;&gt;&lt;/d-cite&gt;. Therefore, this yields the following update:&lt;/p&gt;
+
+\[\pi_{S,w}(\theta\vert x) \propto \pi(\theta) \exp\{ - w \cdot S (p(\cdot\vert\theta),x)\}.\]
+
+&lt;p&gt;This approach has been investigated in some recent works, amongst which &lt;d-cite key=&quot;pacchiardi2021generalized&quot;&gt;&lt;/d-cite&gt;, &lt;d-cite key=&quot;jewson2018principles&quot;&gt;&lt;/d-cite&gt; , &lt;d-cite key=&quot;loaiza2019focused&quot;&gt;&lt;/d-cite&gt; and &lt;d-cite key=&quot;giummole2019objective&quot;&gt;&lt;/d-cite&gt;. In this way, you learn about the parameter value minimizing the expected scoring rule over the data generating process \(g\):&lt;/p&gt;
+
+\[\int S (p(\cdot|\theta),x) g(x) dx.\]
+
+&lt;p&gt;For some scoring rules \(S\), the above expectation corresponds to a statistical divergence (for instance the energy distance and MMD &lt;d-cite key=&quot;pacchiardi2021generalized&quot;&gt;&lt;/d-cite&gt;). Therefore, you can learn about the parameter value for which the model is closer to the data generating process according to different divergences from the KL one (which, as discussed at the beginning, is what the original Bayes’ posterior leads to). If you are interested for instance in prediction tasks (for which scoring rules are often used as evaluation criteria), this approach is a way to obtain better predictions with a misspecified model in a Bayesian setting&lt;d-cite key=&quot;loaiza2019focused&quot;&gt;&lt;/d-cite&gt;.&lt;/p&gt;
+
+&lt;p&gt;Clearly, this still gives a coherent update, but the likelihood principle is not satisfied anymore (as we use the likelihood, but do not just evaluate it at the observation); however, the likelihood principle itself does not seem very reasonable if the model is misspecified in the first place&lt;d-cite key=&quot;jewson2018principles&quot;&gt;&lt;/d-cite&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;generalized-variational-inference&quot;&gt;Generalized Variational Inference&lt;/h2&gt;
+&lt;p&gt;One more step towards generality and we find the approach presented in &lt;d-cite key=&quot;knoblauch2019generalized&quot;&gt;&lt;/d-cite&gt;.&lt;/p&gt;
+
+&lt;p&gt;The idea is to start from the variational formulation of Bayes’ posterior which is attributed to Donsker and Varadhan &lt;d-cite key=&quot;donsker1975asymptotic&quot;&gt;&lt;/d-cite&gt;; say we have \(n\) independent observations \(\mathbf {x} = (x_1, x_2, \ldots, x_n)\); then, it can be shown that Bayes’ posterior is defined by:&lt;/p&gt;
+
+\[\pi(\cdot|\mathbf x) = \underset{q \in \mathcal P (\Theta)}{\operatorname{argmin}}\left\{\mathbb{E}_{q(\theta)}\left[-\sum_{i=1}^{n} \log \left(p\left(x_{i} \mid {\theta}\right)\right)\right]+D_{\text{KL}}(q \| \pi)\right\},\]
+
+&lt;p&gt;where \(\Theta\) denotes the values that \(\theta\) can take, \(\mathcal P (\Theta)\) is the set of all probability distributions on \(\Theta\), and \(D_{\text{KL}}(q \| \pi)\) is the KL divergence between the distribution \(q\) and the prior \(\pi\).&lt;/p&gt;
+
+&lt;p&gt;This formulation leads to an &lt;em&gt;optimization-centric&lt;/em&gt; view of Bayesian inference, as the authors of &lt;d-cite key=&quot;knoblauch2019generalized&quot;&gt;&lt;/d-cite&gt; put it; additionally, the loss-based posterior in Eq. \eqref{Eq:bissiri} &lt;d-cite key=&quot;bissiri2016general&quot;&gt;&lt;/d-cite&gt; can be obtained in a similar fashion by just replacing the negative log-likelihood with the generic loss function \(\ell\):&lt;/p&gt;
+
+\[\pi_{\ell,w}(\cdot|\mathbf x) = \underset{q \in \mathcal P (\Theta)}{\operatorname{argmin}}\left\{\mathbb{E}_{q(\theta)}\left[w \sum_{i=1}^{n} \ell(\theta, x_i) \right]+D_{\text{KL}}(q \| \pi)\right\}.\]
+
+&lt;p&gt;This formulation open the doors to additional extensions by changing \(D_{\text{KL}}\) in the optimization objective above to a different divergence, say \(D\). Further, you can also restrict the minimization problem to a constrained space of distributions \(\mathcal \Pi \subseteq \mathcal P(\Theta)\). The resulting update rule obtained in this way is termed &lt;em&gt;the Rule of Three (RoT)&lt;/em&gt;, as you obtain a posterior distribution by specifying the loss, the space of distributions \(\mathcal \Pi\) and the divergence \(D\):&lt;/p&gt;
+
+\[\pi_{\ell, D, \mathcal \Pi}(\cdot|\mathbf x) = \underset{q \in \mathcal \Pi }{\operatorname{argmin}}\left\{\mathbb{E}_{q(\theta)}\left[w \sum_{i=1}^{n} \ell(\theta, x_i) \right]+D(q \| \pi)\right\} \stackrel{\text{def}}{=} P(\ell, D, \Pi).\]
+
+&lt;p&gt;However, it is in general impossible to obtain a closed form solution for the above problem. Additionally, you do not have a coherent update anymore.&lt;/p&gt;
+
+&lt;p&gt;In the paper &lt;d-cite key=&quot;knoblauch2019generalized&quot;&gt;&lt;/d-cite&gt;, they show how the above problem generalizes standard Variational Inference (VI, in which you select the distribution in a given class which minimizes the KL divergence from the exact posterior), hence the name of the approach. Therefore, the RoT unifies under the same hat variational inference, loss based posteriors and the standard Bayes’ posterior. It is important to notice how, instead, VI approaches which employ different divergences from the KL (which they call divergence VI) are not included&lt;d-footnote&gt;This means that standard VI (with the KL) is theoretically optimal with respect to divergence VI as the former directly approximates the exact posterior. That however is restricted to the case in which the likelihood and prior are well specified, or to the case in which the variational family $\Pi$ is large enough; if that is not the case, it may be that divergence VI gives better results (as it is sometimes observed in the literature; see Section 2.4 in &lt;d-cite key=&quot;knoblauch2019generalized&quot;&gt;&lt;/d-cite&gt;).&lt;/d-footnote&gt;.&lt;/p&gt;
+
+&lt;p&gt;The rest of the work discusses in very much detail (more than 100 pages!) the properties of the resulting posterior. The key idea is that with this approach you can not only perform inference with a generic loss (as it was already with the loss-based approach by &lt;d-cite key=&quot;bissiri2016general&quot;&gt;&lt;/d-cite&gt; in Eq. \eqref{Eq:bissiri}), but also choose which properties of the prior to consider by picking the right \(D\), and finally reducing the computational burden posed by an unconstrained \(\mathcal P(\Theta)\) by choosing a suitable space of probability distributions \(\Pi\). That therefore tackles the other issues with standard Bayesian inference that I mentioned above.&lt;/p&gt;
+
+&lt;p&gt;They also provide an axiomatic derivation of the RoT; interestingly, among the required axioms is a generalized likelihood principle, which states that all information on \(\theta\) contained in \(\mathbf x\) is accessible through evaluation of the loss \(\ell\) at the datapoints.&lt;/p&gt;
+
+&lt;h2 id=&quot;recap&quot;&gt;Recap&lt;/h2&gt;
+
+&lt;p&gt;I have gone up the ladder of generality, from standard Bayes’ posterior to the General Variational Inference formulation; at each step, some features of standard Bayes’ posterior are lost and some others are retained, but a larger set of tools become available. Those may work better for instance with misspecified models, or in case you do not even want to specify a full probabilistic model, or finally if a full Bayesian analysis is too costly and you want to instead resort to a variational approach.&lt;/p&gt;
+
+&lt;p&gt;The following Venn’s diagram represents the relation between the different techniques presented here:&lt;/p&gt;
+
+&lt;div class=&quot;l-body&quot;&gt;
+    &lt;img class=&quot;img-fluid&quot; src=&quot;/assets/img/blog/2021-08-05-generalizedBayes/venn_diagram.svg&quot; /&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;I have followed here a possible generalization route, but that is by no means the only possibility and my overview does not include all methods which are a superset of standard Bayes’ posterior - I have for instance excluded the approach taken in &lt;d-cite key=&quot;fong2021martingale&quot;&gt;&lt;/d-cite&gt; which puts the focus on the predictive distribution rather than the likelihood, or the one in &lt;d-cite key=&quot;masegosa2019learning&quot;&gt;&lt;/d-cite&gt;, which uses PAC-Bayesian bounds to define distributions which do not concentrate on one single parameter value in the limit of infinite data if the model is misspecified, thus obtaining better predictive performance.&lt;/p&gt;
+
+&lt;p&gt;Still, I think the approaches reviewed here are thought-provoking and allow to see Bayesian inference under a different light. I also feel they bring the original axiomatic theory closer to a pragmatical toolbox.&lt;/p&gt;
+
+&lt;p&gt;Of course, I do not think now that standard Bayesian inference has to be thrown to the garbage; there is no need to list the practical results that have been possible with it. Still, it is good to know there are ways around (or beyond) in case a standard Bayesian analysis doesn’t work. Additionally, some of the techniques developed to work with standard posteriors (for instance MCMC and VI) can be ported to generalized posteriors.&lt;/p&gt;
+
+&lt;p&gt;I am sure there will be other extensions proposed in the future, so keep an eye out if you are interested!&lt;/p&gt;</content><author><name>Lorenzo Pacchiardi</name></author><summary type="html">If you are reading this, you probably know what Bayes’ theorem is. Here, we are concerned with the use of Bayes’ theorem to perform inference for parameters of a statistical model (a.k.a. Bayesian inference).</summary></entry><entry><title type="html">Sampling from doubly intractable distributions - the ExchangeMCMC algorithm</title><link href="http://oliveiramc.github.io/blog/2020/exchangeMCMC/" rel="alternate" type="text/html" title="Sampling from doubly intractable distributions - the ExchangeMCMC algorithm" /><published>2020-12-29T00:00:00+00:00</published><updated>2020-12-29T00:00:00+00:00</updated><id>http://oliveiramc.github.io/blog/2020/exchangeMCMC</id><content type="html" xml:base="http://oliveiramc.github.io/blog/2020/exchangeMCMC/">&lt;h1 id=&quot;motivation&quot;&gt;Motivation&lt;/h1&gt;
+
+&lt;p&gt;In Bayesian Statistics, the main object of interest is the posterior distribution of the parameters \(\theta\) 
+given some observed data \(x\). Specifically, given a prior distribution \(\pi(\theta)\) and a likelihood 
+\(p(x\vert \theta)\), the posterior is (via Bayes’ theorem):&lt;/p&gt;
+
+\[\pi(\theta\vert x) = \frac{\pi(\theta) p(x\vert \theta)}{p(x)}, \qquad p(x) = \int \pi(\theta) p(x\vert \theta) d\theta.\]
+
+&lt;p&gt;Markov Chain Monte Carlo (MCMC) techniques are widely used to sample from \(\pi(\theta\vert x)\); these usually require access to \(\pi(\theta)\) and \(p (x\vert\theta)\) but do not require evaluating \(p(x)\) (we show this below for the Metropolis-Hastings algorithm).&lt;/p&gt;
+
+&lt;p&gt;However, there are cases in which the likelihood function is known only up to a normalizing constant:&lt;/p&gt;
+
+&lt;p&gt;\(p(x\vert \theta) = \frac {\tilde{p}(x\vert \theta)}{Z(\theta)},\)
+where \(\tilde p(x\vert \theta)\) is an unnormalized version of the likelihood and \(Z(\theta)\) is intractable. The posterior in this case is said &lt;strong&gt;doubly intractable&lt;/strong&gt; as there are two sources of intractability: \(p(x)\) and \(Z(\theta)\).&lt;/p&gt;
+
+&lt;p&gt;In this case, MCMC cannot be straightforwardly used. Below, we describe a popular extension of Metropolis-Hastings that 
+works in the case of doubly intractable distributions; but first, let us recall the original Metropolis-Hastings algorithm.&lt;/p&gt;
+
+&lt;h1 id=&quot;metropolis-hastings-algorithm&quot;&gt;Metropolis-Hastings algorithm&lt;/h1&gt;
+
+&lt;p&gt;The standard Metropolis-Hastings algorithm uses a distribution \(q ( \cdot \vert \theta)\) to generate a proposal 
+value \(\theta&apos;\) starting from the current state of the chain \(\theta\); then, this proposal is accepted with probability \(\min\{1, \alpha \}\), where:&lt;/p&gt;
+
+&lt;p&gt;\begin{equation}
+\alpha = \frac{q(\theta\vert \theta’) \pi(\theta’) p(x\vert \theta’)}{q(\theta’\vert \theta) \pi(\theta) p(x\vert \theta)} = \frac{q(\theta\vert \theta’) \pi(\theta’) \tilde {p}(x\vert \theta’) }{q(\theta’\vert \theta) \pi(\theta) \tilde {p}(x\vert \theta)}  \textcolor{red}{\frac{Z(\theta)}{Z(\theta’)}}.
+\end{equation}&lt;/p&gt;
+
+&lt;p&gt;As you can see, this does not require knowing \(p(x)\), but instead requires the ratio \({Z(\theta)}/{Z(\theta&apos;)}.\) It cannot therefore be applied in the setting of doubly-intractable distributions.&lt;/p&gt;
+
+&lt;div class=&quot;l-body&quot;&gt;
+    &lt;img class=&quot;img-fluid&quot; src=&quot;/assets/img/blog/2020-12-30-exchangeMCMC/alg1.svg&quot; /&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;the-exchangemcmc-algorithm&quot;&gt;The ExchangeMCMC algorithm&lt;/h1&gt;
+
+&lt;p&gt;The ExchangeMCMC algorithm (Murray et al., 2012, &lt;d-cite key=&quot;murray2012mcmc&quot;&gt;&lt;/d-cite&gt;) bypasses this issue by drawing an auxiliary observation&lt;/p&gt;
+
+\[x&apos; \sim p(\cdot\vert \theta&apos;)\]
+
+&lt;p&gt;and defining the acceptance probability as:&lt;/p&gt;
+
+&lt;p&gt;\begin{equation}\label{Eq:acc_rate_exchange}
+\alpha = \frac{q(\theta\vert \theta’) \pi(\theta’)p(x\vert \theta’)}{q(\theta’\vert \theta)\pi(\theta) p(x\vert \theta)}\textcolor{blue}{\frac{p(x’\vert \theta)}{p(x’\vert \theta’)}} = \frac{q(\theta\vert \theta’) \pi(\theta’)\tilde p(x\vert \theta’)\textcolor{blue}{\tilde p(x’\vert \theta)}}{q(\theta’\vert \theta)\pi(\theta)\tilde p(x\vert \theta)\textcolor{blue}{\tilde p(x’\vert \theta’)}}  \frac{\cancel{Z(\theta)\textcolor{blue}{Z(\theta’)}}}{\cancel{Z(\theta’)\textcolor{blue}{Z(\theta)}}},
+\end{equation}
+where the black part is the same as in the original Metropolis-Hastings algorithm, but adding the blue terms allow to evaluate \(\alpha\) without estimating the normalizing constants. Still, the resulting algorithm targets the correct distribution.&lt;/p&gt;
+
+&lt;div class=&quot;l-body&quot;&gt;
+    &lt;img class=&quot;img-fluid&quot; src=&quot;/assets/img/blog/2020-12-30-exchangeMCMC/alg2.svg&quot; /&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;some-extensions&quot;&gt;Some extensions&lt;/h1&gt;
+
+&lt;h2 id=&quot;bridging&quot;&gt;Bridging&lt;/h2&gt;
+
+&lt;p&gt;The acceptance rate in Eq.\eqref{Eq:acc_rate_exchange} depends on two ratios: \(\frac{p(x\vert \theta&apos;)}{p(x\vert \theta)}\) represents how well the proposed parameter value explains the observation with respect to the previous parameter value, while \(\frac{p(x&apos;\vert \theta)}{p(x&apos;\vert \theta&apos;)}\) measures how well the auxiliary variable (generated using \(\theta&apos;\)) can be explained with parameter \(\theta\).&lt;/p&gt;
+
+&lt;p&gt;Therefore, even if the former is large and \(\theta&apos;\) would be a suitable parameter value, \(\alpha\) can still be small if the auxiliary random variable is not explained well by the previous parameter value. This can lead to slow mixing of the chain; to improve on this, Murray et al., 2012, proposed to sample a set of auxiliary variables \((x&apos;_0, x&apos;_1, \ldots, x&apos;_K)\) from intermediate distributions in the following way: consider a set of densities: 
+\(\tilde p_k(x	\vert \theta, \theta&apos;) = \tilde p(x\vert \theta&apos;)^{\beta_k} \tilde p(x\vert \theta)^{1- \beta_k}, \quad \beta_k = \frac{K - k + 1}{K + 1};\)
+\(x&apos;_0\) is generated from \(p(\cdot\vert \theta&apos;)\) as before, and then each \(x&apos;_k\) is generated from \(R(\cdot \vert  x&apos;_{k-1}; \theta, \theta&apos;)\), which denotes a Metropolis-Hastings transition kernel starting from \(x&apos;_{k-1}\) with stationary density \(\tilde p_k(\cdot\vert \theta, \theta&apos;)\). Then, the acceptance rate is modified as follows: 
+\begin{equation}\label{Eq:acc_rate_exchange_bridging}
+\alpha = \frac{\tilde p(x\vert \theta’)q(\theta\vert \theta’) \pi(\theta’)}{\tilde p(x\vert \theta)q(\theta’\vert \theta)\pi(\theta)} \cdot \prod_{k=0}^{K} \frac{\tilde p_{k+1}(x’_k\vert \theta, \theta’) }{\tilde p_k(x’_k\vert \theta, \theta’) }.
+\end{equation}&lt;/p&gt;
+
+&lt;p&gt;Note that \(K=0\) recovers the original ExchangeMCMC. This procedure, usually called &lt;em&gt;bridging&lt;/em&gt;, generally improves the acceptance rate as it basically introduces a sequence of intermediate updates to the auxiliary data which by smoothening out the difference between the two distributions.&lt;/p&gt;
+
+&lt;div class=&quot;l-body&quot;&gt;
+    &lt;img class=&quot;img-fluid&quot; src=&quot;/assets/img/blog/2020-12-30-exchangeMCMC/alg3.svg&quot; /&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;exchangemcmc-without-perfect-simulations&quot;&gt;ExchangeMCMC without perfect simulations&lt;/h2&gt;
+
+&lt;p&gt;If it is not possible to sample from \(p(\cdot\vert \theta&apos;)\) as it is required in the ExchangeMCMC algorithm, Murray et al., 2012, suggested to run \(T_{in}\) steps of an MCMC chain on \(x\) targeting \(p(\cdot\vert \theta&apos;)\) at each step of ExchangeMCMC; if \(T_{in}\) is large enough, the last sample can be considered as (approximately) drawn from \(p(\cdot\vert \theta&apos;)\) itself and used in place of the unavailable perfect simulation.&lt;/p&gt;
+
+&lt;p&gt;In practice, however, this only leads to an approximate ExchangeMCMC algorithm, as at each iteration of the inner chain a finite \(T_{in}\) is used, so that the inner chain would not perfectly converge to its target; for this reason, even an infinitely long outer chain would not target the right posterior for any finite \(T_{in}\).&lt;/p&gt;
+
+&lt;p&gt;Nonetheless, this approach was shown empirically to work satisfactorily &lt;d-cite key=&quot;liang2010double&quot;&gt;&lt;/d-cite&gt; &lt;d-cite key=&quot;caimo2011bayesian&quot;&gt;&lt;/d-cite&gt; &lt;d-cite key=&quot;everitt2012bayesian&quot;&gt;&lt;/d-cite&gt;; moreover, it has been argued &lt;d-cite key=&quot;liang2010double&quot;&gt;&lt;/d-cite&gt; that starting the inner chain from the observation value improves convergence.&lt;/p&gt;
+
+&lt;p&gt;Some theoretical guarantees (albeit under strongs conditions), are given in Appendix B of Everitt, 2012 &lt;d-cite key=&quot;everitt2012bayesian&quot;&gt;&lt;/d-cite&gt;, which bounds the total variation distance between the target of approximate ExchangeMCMC with finite \(T_{in}\) and the target of the exact one, and shows that they become equal when \(T_{in} \to \infty\).&lt;/p&gt;
+
+&lt;div class=&quot;l-body&quot;&gt;
+    &lt;img class=&quot;img-fluid&quot; src=&quot;/assets/img/blog/2020-12-30-exchangeMCMC/alg4.svg&quot; /&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;related-algorithms&quot;&gt;Related algorithms&lt;/h1&gt;
+&lt;p&gt;ExchangeMCMC algorithm is very popular due to its ease of use. However, it is certainly not the only algorithm to sample from doubly intractable distribution (see the nice review given in Park and Haran, 2018 &lt;d-cite key=&quot;park2018bayesian&quot;&gt;&lt;/d-cite&gt;); some are listed next:&lt;/p&gt;
+
+&lt;ul&gt;
+    &lt;li&gt;Caimo et al., 2011 &lt;d-cite key=&quot;caimo2011bayesian&quot;&gt;&lt;/d-cite&gt; proposed a parallel-chain MCMC algorithm&lt;/li&gt;
+    &lt;li&gt;Everitt et al., 2012&lt;d-cite key=&quot;everitt2017marginal&quot;&gt;&lt;/d-cite&gt; built an SMC-type algorithm which is also capable of recycling information from past simulations&lt;/li&gt;
+    &lt;li&gt;Finally, Liang et al., 2016 &lt;d-cite key=&quot;liang2016adaptive&quot;&gt;&lt;/d-cite&gt; proposed an algorithm which is inspired from ExchangeMCMC and, in the case of impossible perfect sampling, still targets the right invariant distribution. This algorithm requires some hand-tuning and needs to keep in memory a large amount of data, which may hinder its applicability.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Differently from ExchangeMCMC, the above ones can be parallelized.&lt;/p&gt;</content><author><name>Lorenzo Pacchiardi</name></author><summary type="html">Motivation</summary></entry></feed>
